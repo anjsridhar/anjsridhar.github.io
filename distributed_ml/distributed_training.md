@@ -34,7 +34,7 @@ The training code that you write for a single machine will now need to be modifi
 
 7. Checkpointing
 
-![Distributed training stack](/images/distributed_training_intro.jpg)
+![Distributed training stack](images/distributed_training_intro.jpg)
 
 Input on a single machine for training generally involves taking a list of files or raw data, adding  a bunch of transformations and finally returns data in a 
 certain format and of a given batch. Traditionally you might represent input by describing a dataset object spec and an iterator representing how you intend to 
@@ -83,9 +83,13 @@ exactly what is happening so that they can write more performant training loops.
 If you are interested to learn more about the different technologies out there I suggest a few survey papers [2][3][4].
 
 
-References
+## References
 [1] https://towardsdatascience.com/modern-parallel-and-distributed-python-a-quick-tutorial-on-ray-99f8d70369b8
+
 [2] Chahal, K., Grover, M. S., & Dey, K. (n.d.). A Hitchhiker’s Guide On Distributed Training of Deep Neural Networks.
+
 [3] Mayer, R., & Jacobsen, H.-A. (2019). Scalable Deep Learning on Distributed Infrastructures: Challenges, Techniques and Tools. In ACM Comput. Surv. 1, 1, Article (Vol. 1). Retrieved from https://doi.org/0000001.0000001
+
 [4] Verbraeken, J., Wolting, M., Katzy, J., Klop-Penburg, J., & Rellermeyer, J. S. (n.d.). 3 A Survey on Distributed Machine Learning.
+
 [5] https://github.com/baidu-research/baidu-allreduce
