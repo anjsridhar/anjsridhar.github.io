@@ -1,4 +1,4 @@
-#### What is Distributed Training?
+# What is Distributed Training?
 
 Training your model at scale involves different technologies at different levels of the stack. From the lowest level of the stack we first have the accelerator and framework. On top of this sits libraries that are easy to use APIs that don’t necessarily involve dealing with the complexity that comes with the machine learning frameworks out there. The level above that handles tasks that require a global view of training your model. This kind of orchestration usually involves scheduling of training tasks. These levels don’t always have a clear boundary and functionality often criss crosses across the stack
 
@@ -19,34 +19,44 @@ More advanced distributed training architectures such as model parallelism, pipe
 Before getting into the details of what “data parallelism” and “model parallelism” actually mean let's understand the different cut points at which we need to think about distributed specific logic.
 
 The training code that you write for a single machine will now need to be modified to be able to work in a distributed setting. The main parts that you will need to think about are:
+
 1. Input
+
 2. Model
+
 3. Training Loop 
+
 4. Gradient aggregation
+
 5. Losses
+
 6. Metrics
+
 7. Checkpointing
 
-Input
+![Distributed training stack](/images/distributed_training_intro.jpg)
+
 Input on a single machine for training generally involves taking a list of files or raw data, adding  a bunch of transformations and finally returns data in a 
 certain format and of a given batch. Traditionally you might represent input by describing a dataset object spec and an iterator representing how you intend to 
 traverse the data. With distributed input there are more considerations. You need to think about how you are going to shard and distribute this data among all the
 devices. The other tricky thing is to be aware of partial batches and understand if the framework deals with it. Distributed input is a complex topic by itself and 
 requires a dedicated post.
 
-Model 
 When you instantiate a model on a given device, the model parameters reside on the said device. If you want to distribute your model over multiple devices and 
 across workers, you might have to either replicate your parameters or place them on designated servers called parameter servers.
 
-Training Loop and Gradient Aggregation
 The training loop involves defining a function that takes in some input, applies the model on it and has a predicted output. This training step should either be run
 `n` steps per epoch or contain the `n` steps within, in which case it will be run for 1 epoch. Within this training step, there are a few interesting things that 
 happen with respect to distributed training - aggregation of data among different devices and updating model variables. For any training loop, the steps are:
 
 1. Calculate the predicted outputs for a given input
+
 2. Calculate the loss of the predicted vs actual outputs for a given batch of data
+
 3. Calculate the gradients of the model variables wrt to loss
+
 4. Aggregate gradients
+
 5. Update model variables
 
 Steps 1, 2, 3 and 5 are the same for single device and multi device training. Step 4. Is where we need to employ something we call collective communication 
