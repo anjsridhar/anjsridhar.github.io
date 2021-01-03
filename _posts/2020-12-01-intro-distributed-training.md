@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "[Distributed ML] Training"
-date:   2020-12-26 01:22:24 -0800
+date:   2020-12-01 01:22:24 -0800
 categories: distributed_ml
 ---
 

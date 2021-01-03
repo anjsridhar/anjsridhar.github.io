@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "[Letters to my 20-yr old self] Debugging"
-date:   2020-12-26 09:22:24 -0800
+date:   2020-12-15 09:22:24 -0800
 categories: letters_to_myself
 ---
 

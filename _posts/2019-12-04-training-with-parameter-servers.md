@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "[Distributed ML] Training with Parameter Servers"
-date:   2020-12-26 01:22:24 -0800
+date:   2020-12-04 01:22:24 -0800
 categories: distributed_ml
 ---
 
@@ -24,7 +24,7 @@ One of the most common questions users have is when should I use a Parameter Ser
 
 The negative side of parameter servers is that they don’t converge as fast as synchronous training since each worker is not seeing a global batch of updates to a model parameter and depending on how the push/pull model of parameters is implemented, a worker could be pulling in stale gradients. This means you will probably need to run model training for longer and go through more iterations. The other issue is reproducibility because you could start with 50 workers and with failures you might train with fewer than the number over the course of model training. This means that you could converge at different epochs and there isn’t really a way you could say that you are going to see `x%` accuracy at `yth` epoch. This makes debugging and reproducing research results challenging.
 
-I am going to take the paper by Li et al [1] as a starting point and try and understand the approaches that current researchers are taking. The goal is to see if research/industry is benefiting from the Parameter Server approach or are they looking for something different? Another question I am curious about is what part of the 1-4 steps above should you modify? What works and what doesn’t? This post won't be able to answer all these questions but hopefully in future posts the answer becomes more clear. From hereon I am going to refer to Parameter Server training as PS for the sake of brevity.
+I am going to take the paper by Li et al [1] as a starting point and try and understand the approaches that current researchers are taking. The goal is to see if research/industry is benefiting from the Parameter Server approach or are they looking for something different? Another question I am curious about is what part of the 1-4 steps above should you modify? What works and what doesn’t? This post won't be able to answer all these questions but hopefully in future posts the answer becomes more clear. From hereon I am going to refer to Parameter Server training as PS for the sake of brevity. Also note that all the below images are taken from the paper [1].
 
 The architecture used for PS training is as follows: there are two sets of servers - parameter servers and workers. Parameter servers are managed by a server node that maintains parameter to server mappings along with information about backup servers. It also tracks the state of liveness of a given parameter server. A worker group is managed by a scheduler node. A scheduler node assigns tasks (e.g dataset shard should be used for gradient computation) to the workers in a group. In the event of failure/preemption, the scheduler node reassigns tasks accordingly. At the start of a given iteration, each worker pulls the latest model parameters from the parameter server. It then computes the loss using the assigned dataset shard. The gradients are calculated in the backward pass and pushed to the designated parameter server.
 
