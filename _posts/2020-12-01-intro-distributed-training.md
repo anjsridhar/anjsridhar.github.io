@@ -43,7 +43,7 @@ With this in mind, let us understand the different cut points in our ML training
 7. Checkpointing
 
 
-![Distributed Training Cutpoints](/assets/images/2020-12-26-distributed-training.jpg)
+![Distributed Training Cutpoints](/assets/images/intro_distributed_training/distributed-training-grid.jpg)
 
 **Input** on a single machine for training generally involves taking a list of files or raw data, adding  a bunch of transformations and finally returns data in a certain format and of a given batch. Traditionally you might represent input by describing a dataset object spec and an iterator representing how you intend to traverse the data. With distributed input there are more considerations. You need to think about how you are going to shard, shuffle and distribute this data among all the devices. The other tricky thing is to be aware of partial batches and understand if the framework deals with it. Distributed input is a complex topic by itself and requires a dedicated post.
 
