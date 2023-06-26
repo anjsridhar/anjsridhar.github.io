@@ -1,8 +1,8 @@
 ---
 layout: post
 title:  "PGen: Evolution of an Application"
-date:   2023-06-26 16:33:03 -0800
-categories: AI
+date:   2023-06-26 01:22:24 -0800
+categories: ai
 ---
 
 ## Personalized Passwords - the Idea
